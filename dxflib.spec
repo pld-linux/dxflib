@@ -1,5 +1,5 @@
 Summary:	Open source C++ library mainly for parsing DXFTM files
-Summary(pl):	Otwarta biblioteka w C++ do obslugi plikow DXF.
+Summary(pl.UTF-8):	Otwarta biblioteka w C++ do obslugi plikow DXF
 Name:		dxflib
 Version:	2.2.0.0
 Release:	0.3
@@ -14,7 +14,7 @@ BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 
 %description
-%description(pl)
+%description -l pl.UTF-8
 
 %prep
 %setup -q -n %{name}-%{version}-1.src
@@ -23,10 +23,9 @@ BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 %build
 %{__aclocal}
 %{__autoconf}
-%configure \
+%configure 
 
 %{__make}
-
 %{__make} -C test
 
 %install
