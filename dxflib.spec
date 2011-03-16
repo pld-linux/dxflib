@@ -7,6 +7,7 @@ License:	GPL
 Group:		Libraries
 Source0:	ftp://anonymous:anonymous@ribbonsoft.com/archives/dxflib/dxflib-%{version}-1.src.tar.gz
 # Source0-md5:
+Patch0:		%{name}_include_string.patch
 URL:		http://www.qcad.org/dxflib.html
 #BuildRequires:
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
@@ -17,6 +18,13 @@ BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 %description(pl)
 
 %prep
+%setup -q -n %{name}-%{version}-1.src
+%patch0
+
 %build
+%{__aclocal}
+%{__autoconf}
+%configure 
+%{__make}
 %install
 %files
