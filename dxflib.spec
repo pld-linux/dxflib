@@ -9,12 +9,13 @@ Source0:	ftp://anonymous:anonymous@ribbonsoft.com/archives/dxflib/%{name}-%{vers
 # Source0-md5:	0eb6bef3b3a702012eeb4e99ef1aa3f1
 Patch0:		%{name}_include_string.patch
 URL:		http://www.qcad.org/dxflib.html
-#BuildRequires:
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
-
 %description
+Open source C++ library mainly for parsing DXFTM files
+
 %description -l pl.UTF-8
+Otwarta biblioteka w C++ do obslugi plikow DXF
 
 %prep
 %setup -q -n %{name}-%{version}-1.src
@@ -23,14 +24,13 @@ BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 %build
 %{__aclocal}
 %{__autoconf}
-%configure 
+%configure
 
 %{__make}
 %{__make} -C test
 
 %install
 rm -rf $RPM_BUILD_ROOT
-
 %{__make} install \
 	LIBDIR=$RPM_BUILD_ROOT%{_libdir} \
 	INCDIR=$RPM_BUILD_ROOT%{_includedir}/dxflib
