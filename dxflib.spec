@@ -1,39 +1,41 @@
 Summary:	Open source C++ library mainly for parsing DXFTM files
-Summary(pl.UTF-8):	Otwarta biblioteka w C++ do obslugi plikow DXF
+Summary(pl.UTF-8):	Otwarta biblioteka w C++ do obsługi plików DXF
 Name:		dxflib
-Version:	2.2.0.0
-Release:	0.3
-License:	GPL
+Version:	3.17.0
+Release:	0.1
+License:	GPL v2+
 Group:		Libraries
-Source0:	ftp://anonymous:anonymous@ribbonsoft.com/archives/dxflib/%{name}-%{version}-1.src.tar.gz
-# Source0-md5:	0eb6bef3b3a702012eeb4e99ef1aa3f1
-Patch0:		%{name}_include_string.patch
-URL:		http://www.qcad.org/dxflib.html
+Source0:	https://qcad.org/archives/dxflib/%{name}-%{version}-src.tar.gz
+# Source0-md5:	b4b3bdc7ed678952b5a81c01d1faaac2
+URL:		https://qcad.org/en/what-is-dxflib
+BuildRequires:	qt5-qmake
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
 Open source C++ library mainly for parsing DXFTM files
 
 %description -l pl.UTF-8
-Otwarta biblioteka w C++ do obslugi plikow DXF
+Otwarta biblioteka w C++ do obsługi plików DXF
 
 %prep
-%setup -q -n %{name}-%{version}-1.src
-%patch0
+%setup -q -n %{name}-%{version}-src
 
 %build
-%{__aclocal}
-%{__autoconf}
-%configure
+
+qmake-qt5 -r \
+	QMAKE_CXX="%{__cxx}" \
+	QMAKE_LINK="%{__cxx}" \
+	QMAKE_CXXFLAGS_RELEASE="%{rpmcxxflags}" \
+	QMAKE_LFLAGS_RELEASE="%{rpmldflags}" \
+	QMAKE_RPATH=
 
 %{__make}
-%{__make} -C test
 
 %install
 rm -rf $RPM_BUILD_ROOT
-%{__make} install \
-	LIBDIR=$RPM_BUILD_ROOT%{_libdir} \
-	INCDIR=$RPM_BUILD_ROOT%{_includedir}/dxflib
+install -d $RPM_BUILD_ROOT{%{_libdir},%{_includedir}/dxflib}
+cp -p libdxflib.a $RPM_BUILD_ROOT%{_libdir}/
+cp -p src/*.h $RPM_BUILD_ROOT%{_includedir}/dxflib/
 
 %clean
 rm -rf $RPM_BUILD_ROOT
